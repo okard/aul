@@ -21,27 +21,34 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
-#ifndef __AUL_SOURCE_HPP__
-#define __AUL_SOURCE_HPP__
+#ifndef __AUL_STREAM_HPP__
+#define __AUL_STREAM_HPP__
 
 namespace aul {
-    
-/**
-* Audio Source
-*/
-class Source
-{
-public:
-    Source();
-    ~Source();
-    
-    
-private:
-    class Impl;
-    Impl* impl;
-};
-    
-    
-} // end namespace aul
 
-#endif // __AUL_SOURCE_HPP__
+/**
+* Represents a audio stream
+*/
+class Stream
+{
+    //read(buff, size)
+    //open(const char* file)
+    //rate
+    //format (mono16, stereo16)...
+    //empty
+    //reset
+};
+
+
+
+/**
+*
+*/
+class StreamFactory
+{
+    //Stream* create(const char* file);
+};
+  
+} //end namespace aul
+    
+#endif

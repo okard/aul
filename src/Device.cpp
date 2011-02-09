@@ -42,7 +42,7 @@ Device::Device()
 */
 Device::~Device()
 {
-
+    delete impl;
 }
 
 /**

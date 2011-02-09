@@ -21,27 +21,43 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
-#ifndef __AUL_SOURCE_HPP__
-#define __AUL_SOURCE_HPP__
+#ifndef __AUL_OGGSTREAM_HPP__
+#define __AUL_OGGSTREAM_HPP__
+
+#include "../Stream.hpp"
+
+#include <ogg/ogg.h>
+#include <vorbis/codec.h>
+#include <vorbis/vorbisenc.h>
+#include <vorbis/vorbisfile.h>
 
 namespace aul {
-    
+ 
 /**
-* Audio Source
-*/
-class Source
+* Represents a OGG Stream
+*/    
+class OggStream : public Stream
 {
-public:
-    Source();
-    ~Source();
-    
-    
 private:
-    class Impl;
-    Impl* impl;
+    /// File Handle
+    FILE*           oggFile; 
+    /// OGG Stream Handle
+    OggVorbis_File  oggStream;    
+    /// Vorbis Info
+    vorbis_info*    vorbisInfo;   
+    /// Vorbis Comment
+    vorbis_comment* vorbisComment; 
+    
+public:
+    //oggFile = fopen(path.c_str(), "rb")
+    //result = ov_open(oggFile, &oggStream, NULL, 0)
+    //vorbisInfo = ov_info(&oggStream, -1);
+    //vorbisComment = ov_comment(&oggStream, -1);
+    
+    //result = ov_read(&oggStream, data + size, BUFFER_SIZE - size, 0, 2, 1, & section);
 };
     
-    
-} // end namespace aul
+      
+} //end namespace aul
 
-#endif // __AUL_SOURCE_HPP__
+#endif // __AUL_OGGSTREAM_HPP__

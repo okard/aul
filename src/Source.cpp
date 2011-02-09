@@ -23,4 +23,27 @@
 */
 
 #include "Source.hpp"
+#include "Stream.hpp"
+
+#include "openal/SourceImpl.hpp"
+
+using aul::Source;
+
+/**
+* Create new Audio Source
+*/
+Source::Source()
+    : impl(new Source::Impl())
+{
+
+}
+
+/**
+* Destructs Audio Source
+*/
+Source::~Source()
+{
+    delete impl;
+}
+
 
