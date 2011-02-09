@@ -30,6 +30,10 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 
+#include "../Source.hpp"
+#include "../Device.hpp"
+#include "../Stream.hpp"
+
 namespace aul {
 
 /**
@@ -46,10 +50,14 @@ private:
     
     /// Audio Stream
     Stream* stream;
+    
+    /// Is AudioStream Open
+    bool streamOpen;
 
 public:
     /// Create OpenAL Audio Source
-    Impl()
+    Impl(Device* dev)
+        : stream(0)
     {
         // Load wav data into a buffer.
         alGenBuffers(1, &buffer);
@@ -92,19 +100,35 @@ public:
     /// Open a file for play
     void open(const char* file)
     {
+        if(stream)
+        {
+            delete stream;
+            stream = 0;
+        }
+        
+        stream = StreamFactory::create(file);
+        update();
+    }
+    
+    /**
+    * Update Buffer
+    */
+    void update()
+    {     
         ALenum format;
         ALsizei size;
         ALvoid* data;
         ALsizei freq;
         ALboolean loop;
         
+        //read from stream to buffer
         //alBufferData(Buffer, format, data, size, freq);
-        //TODO implement reader interface
     }
+    
     
     /// Play audio 
     void play()
-    {
+    {   
         alSourcePlay(source);
     }
     
@@ -119,6 +143,12 @@ public:
     {
          alSourceStop(source);
     }
+    
+    /*
+        ALenum state;
+        alGetSourcei(source, AL_SOURCE_STATE, &state);
+        return (state == AL_PLAYING); 
+    */
 };
     
     

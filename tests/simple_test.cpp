@@ -23,8 +23,10 @@
 */
 
 #include <aul/Device>
+#include <aul/Source>
 
 using aul::Device;
+using aul::Source;
 
 /**
 * Main Function
@@ -32,6 +34,15 @@ using aul::Device;
 int main(int argc, char *argv[])
 {
   Device& d = Device::DefaultDevice();
+  
+  Source* source = d.CreateSource();
+  source->open("test.ogg");
+  source->play();
+  
+  while(true)
+  {
+      source->update();
+  }
     
   return 0;
 }

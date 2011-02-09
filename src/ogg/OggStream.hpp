@@ -36,7 +36,7 @@ namespace aul {
 /**
 * Represents a OGG Stream
 */    
-class OggStream : public Stream
+class OggStream : public Stream, public StreamFacCreator<OggStream>
 {
 private:
     /// File Handle
@@ -49,12 +49,13 @@ private:
     vorbis_comment* vorbisComment; 
     
 public:
-    //oggFile = fopen(path.c_str(), "rb")
-    //result = ov_open(oggFile, &oggStream, NULL, 0)
-    //vorbisInfo = ov_info(&oggStream, -1);
-    //vorbisComment = ov_comment(&oggStream, -1);
     
-    //result = ov_read(&oggStream, data + size, BUFFER_SIZE - size, 0, 2, 1, & section);
+    OggStream();
+    ~OggStream ();
+    
+    void open(const char* file);
+    
+    virtual void read(char* buffer, size_t bufferSize);
 };
     
       

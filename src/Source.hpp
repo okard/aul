@@ -24,7 +24,12 @@
 #ifndef __AUL_SOURCE_HPP__
 #define __AUL_SOURCE_HPP__
 
+
+
 namespace aul {
+    
+class Device;
+
     
 /**
 * Audio Source
@@ -32,9 +37,43 @@ namespace aul {
 class Source
 {
 public:
-    Source();
+    /**
+    * Create new Audio Source
+    */
+    Source(Device* dev);
+    
+    /**
+    * Destructs Audio Source
+    */
     ~Source();
     
+    /**
+    * Open File
+    */
+    void open(const char* file);
+    
+    /**
+    * Update Source
+    */
+    void update();
+    
+    /**
+    * Play Source
+    */
+    void play();
+    
+    /**
+    * Pause Source
+    */
+    void pause();
+    
+    /**
+    * Stop Source
+    */
+    void stop();
+    
+    //loop 
+    //blocking play
     
 private:
     class Impl;

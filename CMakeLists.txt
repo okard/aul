@@ -12,9 +12,12 @@ INCLUDE_DIRECTORIES(include)
 # Library
 ADD_LIBRARY(aul SHARED
             src/Device.cpp
-            src/Source.cpp)
+            src/Source.cpp
+            src/Stream.cpp
+            src/ogg/OggStream.cpp)
 
-TARGET_LINK_LIBRARIES(aul "openal")
+#todo fix lib linking
+TARGET_LINK_LIBRARIES(aul "openal" "ogg" "vorbis" "vorbisfile")
 
 #tests
 ADD_SUBDIRECTORY(tests)

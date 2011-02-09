@@ -21,67 +21,48 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
+#include "OggStream.hpp"
 
-#include "Device.hpp"
-#include "Source.hpp"
+using aul::OggStream;
 
-#include "openal/DeviceImpl.hpp"
-#include "ogg/OggStream.hpp"
-
-using aul::Device;
-using aul::Source;
-
-/**
-* Initializer
-*/
-static void initialize()
+OggStream::OggStream()
 {
-    static bool ready = false;
+
+}
+
+OggStream::~OggStream()
+{
+
+}
+
+void OggStream::open(const char* file)
+{
+    oggFile = fopen(file, "rb");
+    int result = ov_open(oggFile, &oggStream, NULL, 0);
+    vorbisInfo = ov_info(&oggStream, -1);
+    vorbisComment = ov_comment(&oggStream, -1);
+}
+
+
     
-    if(!ready)
+void OggStream::read(char* buffer, size_t bufferSize)
+{
+    int  size = 0;
+    int  section;
+    int  result;
+ 
+    //try to read
+    while(size < bufferSize)
     {
-        //register ogg stream
-        aul::StreamFactory::reg("ogg", &aul::OggStream::create);
-        ready = true;
+        result = ov_read(&oggStream, buffer + size, bufferSize - size, 0, 2, 1, & section);
+    
+        if(result > 0)
+            size += result;
+        else
+            if(result < 0)
+                //TODO error constants from ogg
+                throw "Error while reading ogg";
+            else
+                break;
     }
 }
-
-/**
-* Create new Device
-*/
-Device::Device() 
-    : impl(new Device::Impl())
-{
-    initialize();
-}
-
-/**
-* Destructor
-*/
-Device::~Device()
-{
-    delete impl;
-}
-
-/**
-* Get default device
-*/
-Device& Device::DefaultDevice()
-{
-    static Device device;
-    return device;
-}
-
-
-
-/**
-* Create a new audio source
-*/
-Source* Device::CreateSource()
-{
-    return new Source(this);
-}
-
-
-
-

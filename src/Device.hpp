@@ -26,6 +26,8 @@
 
 namespace aul {
     
+class Source;
+    
 /**
 * Represents a Audio Device
 */
@@ -47,6 +49,11 @@ public:
     * Get default device
     */
     static Device& DefaultDevice();
+    
+    /**
+    * Create a new audio source
+    */
+    Source* CreateSource();
     
 
 private:

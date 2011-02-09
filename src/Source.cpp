@@ -22,6 +22,7 @@
     THE SOFTWARE.
 */
 
+#include "Device.hpp"
 #include "Source.hpp"
 #include "Stream.hpp"
 
@@ -32,10 +33,10 @@ using aul::Source;
 /**
 * Create new Audio Source
 */
-Source::Source()
-    : impl(new Source::Impl())
+Source::Source(Device* dev)
+    : impl(new Source::Impl(dev))
 {
-
+    
 }
 
 /**
@@ -46,4 +47,46 @@ Source::~Source()
     delete impl;
 }
 
+
+/**
+* Open File
+*/
+void Source::open(const char* file)
+{
+    impl->open(file);
+}
+
+
+/**
+* Update Source
+*/
+void Source::update()
+{
+    impl->update();
+}
+
+
+/**
+* Play Source
+*/
+void Source::play()
+{
+    impl->play();
+}
+
+/**
+* Pause Source
+*/
+void Source::pause()
+{
+    impl->pause();
+}
+
+/**
+* Stop Source
+*/
+void Source::stop()
+{
+    impl->stop();
+}
 

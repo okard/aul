@@ -24,29 +24,69 @@
 #ifndef __AUL_STREAM_HPP__
 #define __AUL_STREAM_HPP__
 
+#include <cstddef>
+
 namespace aul {
+    
+class Source;
 
 /**
 * Represents a audio stream
 */
 class Stream
 {
-    //read(buff, size)
-    //open(const char* file)
+public:
+    ///Create new Stream
+    Stream(){}
+    /// Destruct Stream
+    virtual ~Stream(){}
+    
+    /// open
+    virtual void open(const char* file){};
+    
+    /// Read Data
+    virtual void read(char* buffer, size_t bufferSize){};
+    
+    
     //rate
     //format (mono16, stereo16)...
     //empty
     //reset
+    //size?
 };
 
 
+template<class T>
+class StreamFacCreator
+{
+public:
+    ///Create new Instance of Class
+    static Stream* create()
+    {
+        return new T();
+    }
+};
 
 /**
-*
+* Stream Factory
+* Create Streams for specific file types
 */
 class StreamFactory
 {
-    //Stream* create(const char* file);
+public:
+    friend class aul::Source;
+    typedef Stream* (*StreamCreator)();
+    
+public:
+    /**
+    * register stream type
+    */
+    static void reg(const char* fileExtension, StreamCreator createStream );
+    
+    /**
+    * Create a new stream for given file
+    */
+    static Stream* create(const char* file);
 };
   
 } //end namespace aul

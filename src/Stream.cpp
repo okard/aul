@@ -21,67 +21,33 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
+#include "Stream.hpp"
 
-#include "Device.hpp"
-#include "Source.hpp"
 
-#include "openal/DeviceImpl.hpp"
-#include "ogg/OggStream.hpp"
+using aul::Stream;
+using aul::StreamFactory;
 
-using aul::Device;
-using aul::Source;
-
-/**
-* Initializer
-*/
-static void initialize()
-{
-    static bool ready = false;
-    
-    if(!ready)
-    {
-        //register ogg stream
-        aul::StreamFactory::reg("ogg", &aul::OggStream::create);
-        ready = true;
-    }
-}
-
-/**
-* Create new Device
-*/
-Device::Device() 
-    : impl(new Device::Impl())
-{
-    initialize();
-}
-
-/**
-* Destructor
-*/
-Device::~Device()
-{
-    delete impl;
-}
-
-/**
-* Get default device
-*/
-Device& Device::DefaultDevice()
-{
-    static Device device;
-    return device;
-}
-
+#include <map>
+#include <string>
+static std::map<std::string,  StreamFactory::StreamCreator> streamTypes;
 
 
 /**
-* Create a new audio source
+* Register
 */
-Source* Device::CreateSource()
+void StreamFactory::reg(const char* fileExtension,  StreamCreator createStream )
 {
-    return new Source(this);
+    streamTypes[fileExtension] = createStream;
 }
+ 
+/**
+* Look for
+*/
+Stream* StreamFactory::create(const char* file)
+{
+    std::string f = file;
+    f = f.substr(f.find_last_of('.'));
 
-
-
-
+    StreamCreator sc =  streamTypes[f];
+    return sc();
+}
