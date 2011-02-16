@@ -1,23 +1,26 @@
 ############################################
 # CMake File for Audio Utility Library aul
 ############################################
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8) 
+cmake_minimum_required(VERSION 2.8) 
 
-PROJECT(aul)
+project(aul)
 
 #include dirs
-INCLUDE_DIRECTORIES(src)
-INCLUDE_DIRECTORIES(include)
+include_directories(src)
+include_directories(include)
+
+#Setup Libraries
+find_package(OpenAL REQUIRED)
 
 # Library
-ADD_LIBRARY(aul SHARED
+add_library(aul SHARED
             src/Device.cpp
             src/Source.cpp
             src/Stream.cpp
             src/ogg/OggStream.cpp)
 
 #todo fix lib linking
-TARGET_LINK_LIBRARIES(aul "openal" "ogg" "vorbis" "vorbisfile")
+target_link_libraries(aul ${OPENAL_LIBRARY} "ogg" "vorbis" "vorbisfile")
 
 #tests
-ADD_SUBDIRECTORY(tests)
+add_subdirectory(tests)
