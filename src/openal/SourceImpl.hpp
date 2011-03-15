@@ -30,9 +30,9 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 
-#include "../Source.hpp"
-#include "../Device.hpp"
-#include "../Stream.hpp"
+#include <aul/Source.hpp>
+#include <aul/Device.hpp>
+#include <aul/Stream.hpp>
 
 namespace aul {
 

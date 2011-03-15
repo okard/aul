@@ -33,7 +33,9 @@ class Source;
 */
 class Device
 {
-    
+private:
+    //Listener listener
+        
 public:
     /**
     * Create new Device
@@ -55,7 +57,6 @@ public:
     */
     Source* CreateSource();
     
-
 private:
     //pImpl-Pattern
     class Impl;

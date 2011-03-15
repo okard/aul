@@ -21,7 +21,7 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
-#include "Stream.hpp"
+#include <aul/Stream.hpp>
 
 
 using aul::Stream;

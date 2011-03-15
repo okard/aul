@@ -22,8 +22,8 @@
     THE SOFTWARE.
 */
 
-#include "Device.hpp"
-#include "Source.hpp"
+#include <aul/Device.hpp>
+#include <aul/Source.hpp>
 
 #include "openal/DeviceImpl.hpp"
 #include "ogg/OggStream.hpp"

@@ -24,7 +24,7 @@
 #ifndef __AUL_OGGSTREAM_HPP__
 #define __AUL_OGGSTREAM_HPP__
 
-#include "../Stream.hpp"
+#include <aul/Stream.hpp>
 
 #include <ogg/ogg.h>
 #include <vorbis/codec.h>

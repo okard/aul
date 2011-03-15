@@ -22,9 +22,9 @@
     THE SOFTWARE.
 */
 
-#include "Device.hpp"
-#include "Source.hpp"
-#include "Stream.hpp"
+#include <aul/Device.hpp>
+#include <aul/Source.hpp>
+#include <aul/Stream.hpp>
 
 #include "openal/SourceImpl.hpp"
 

@@ -75,6 +75,8 @@ public:
     //loop 
     //blocking play
     
+    //statuc
+    
 private:
     class Impl;
     Impl* impl;

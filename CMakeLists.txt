@@ -16,6 +16,7 @@ find_package(OpenAL REQUIRED)
 add_library(aul SHARED
             src/Device.cpp
             src/Source.cpp
+            src/Source3D.cpp
             src/Stream.cpp
             src/ogg/OggStream.cpp)
 

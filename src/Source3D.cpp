@@ -22,27 +22,4 @@
     THE SOFTWARE.
 */
 
-#include <aul/Device.hpp>
-#include <aul/Source.hpp>
-
-using aul::Device;
-using aul::Source;
-
-/**
-* Main Function
-*/
-int main(int argc, char *argv[])
-{
-  Device& d = Device::DefaultDevice();
-  
-  Source* source = d.CreateSource();
-  source->open("test.ogg");
-  source->play();
-  
-  while(true)
-  {
-      source->update();
-  }
-    
-  return 0;
-}
+#include <aul/Source3D.hpp>

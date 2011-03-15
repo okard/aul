@@ -24,7 +24,7 @@
 #ifndef __AUL_DEVICEIMPL_HPP__
 #define __AUL_DEVICEIMPL_HPP__
 
-#include "../Device.hpp"
+#include <aul/Device.hpp>
 
 #include <stdio.h>
 #include <stdlib.h>

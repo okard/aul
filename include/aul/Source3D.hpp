@@ -21,28 +21,22 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
+#ifndef __AUL_SOURCE3D_HPP__
+#define __AUL_SOURCE3D_HPP__
 
-#include <aul/Device.hpp>
 #include <aul/Source.hpp>
 
-using aul::Device;
-using aul::Source;
+namespace aul {
 
 /**
-* Main Function
+* Represents a Source in a 3D World
 */
-int main(int argc, char *argv[])
+class Source3D : public Source
 {
-  Device& d = Device::DefaultDevice();
-  
-  Source* source = d.CreateSource();
-  source->open("test.ogg");
-  source->play();
-  
-  while(true)
-  {
-      source->update();
-  }
-    
-  return 0;
-}
+     
+     
+};
+
+} //end namespace aul
+
+#endif //__AUL_SOURCE3D_HPP__
