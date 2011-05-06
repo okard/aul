@@ -23,12 +23,15 @@
 */
 #include <aul/Stream.hpp>
 
+#include <aul/Exception.hpp>
+
+#include <iostream>
+#include <map>
+#include <string>
 
 using aul::Stream;
 using aul::StreamFactory;
 
-#include <map>
-#include <string>
 static std::map<std::string,  StreamFactory::StreamCreator> streamTypes;
 
 
@@ -37,6 +40,8 @@ static std::map<std::string,  StreamFactory::StreamCreator> streamTypes;
 */
 void StreamFactory::reg(const char* fileExtension,  StreamCreator createStream )
 {
+    //TODO Ouput?
+    std::cout << "Register file type: " << fileExtension << std::endl;
     streamTypes[fileExtension] = createStream;
 }
  
@@ -46,8 +51,11 @@ void StreamFactory::reg(const char* fileExtension,  StreamCreator createStream )
 Stream* StreamFactory::create(const char* file)
 {
     std::string f = file;
-    f = f.substr(f.find_last_of('.'));
+    f = f.substr(f.find_last_of('.')+1);
 
     StreamCreator sc =  streamTypes[f];
+    if(sc == 0)
+        throw aul::Exception("Can't found associated stream handler for file format");
+        
     return sc();
 }

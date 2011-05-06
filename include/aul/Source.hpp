@@ -37,6 +37,9 @@ class Device;
 class Source
 {
 public:
+    enum PlayType { BLOCK, ASYNC };
+    
+    
     /**
     * Create new Audio Source
     */

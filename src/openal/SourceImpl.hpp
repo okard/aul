@@ -30,6 +30,7 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 
+#include <aul/Exception.hpp>
 #include <aul/Source.hpp>
 #include <aul/Device.hpp>
 #include <aul/Stream.hpp>
@@ -63,16 +64,14 @@ public:
         alGenBuffers(1, &buffer);
         if (alGetError() != AL_NO_ERROR)
         {
-            fprintf(stderr, "alGenBuffers failed\n");
-            return;
+            throw aul::Exception("alGenBuffers failed");
         }
         
         // Bind buffer with a source.
         alGenSources(1, &source);
         if (alGetError() != AL_NO_ERROR)
         {
-            fprintf(stderr, "alGenSources failed\n");
-            return;
+            throw aul::Exception("alGenSources failed");
         }
         
         // Position of the source sound.
@@ -121,7 +120,10 @@ public:
         ALsizei freq;
         ALboolean loop;
         
-        //read from stream to buffer
+        //read to local buffer
+        //stream->read(char* buffer, size_t bufferSize);
+        
+        //from local buffer to openal stream
         //alBufferData(Buffer, format, data, size, freq);
     }
     

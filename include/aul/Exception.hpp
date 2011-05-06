@@ -21,56 +21,41 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
-#ifndef __AUL_OGGSTREAM_HPP__
-#define __AUL_OGGSTREAM_HPP__
+#ifndef __AUL_EXCEPTION_HPP__
+#define __AUL_EXCEPTION_HPP__
 
-#include <aul/Stream.hpp>
-
-#include <ogg/ogg.h>
-#include <vorbis/codec.h>
-#include <vorbis/vorbisenc.h>
-#include <vorbis/vorbisfile.h>
+#include <exception>
 
 namespace aul {
- 
+    
 /**
-* Represents a OGG Stream
-*/    
-class OggStream : public Stream, public StreamFacCreator<OggStream>
+* AUL Exception
+*/
+class  Exception : public std::exception
 {
-private:
-    /// File Handle
-    FILE*           oggFile; 
-    /// OGG Stream Handle
-    OggVorbis_File  oggStream;    
-    /// Vorbis Info
-    vorbis_info*    vorbisInfo;   
-    /// Vorbis Comment
-    vorbis_comment* vorbisComment; 
+    private:
+        /// exception msg
+        const char* msg;
     
-public:
-    /**
-    * Create new OGG stream
-    */
-    OggStream();
+    public:
+        /**
+        * Constructor
+        */
+        Exception(const char* msg)
+            : msg(msg)
+        {
+        }
+        
+        /**
+        * Description
+        */
+        virtual const char* what() const throw()
+        {
+            return msg;
+        }
+};    
     
-    /**
-    * Distructs OGG stream
-    */
-    ~OggStream ();
-    
-    /**
-    * Open a file as ogg stream
-    */
-    void open(const char* file);
-    
-    /**
-    * Read from stream
-    */
-    virtual void read(char* buffer, size_t bufferSize);
-};
-    
-      
 } //end namespace aul
 
-#endif // __AUL_OGGSTREAM_HPP__
+
+#endif // __AUL_EXCEPTION_HPP__

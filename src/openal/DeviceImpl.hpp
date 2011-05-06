@@ -24,6 +24,7 @@
 #ifndef __AUL_DEVICEIMPL_HPP__
 #define __AUL_DEVICEIMPL_HPP__
 
+#include <aul/Exception.hpp>
 #include <aul/Device.hpp>
 
 #include <stdio.h>
@@ -53,8 +54,7 @@ public:
         dev = alcOpenDevice(NULL);
         if(!dev)
         {
-            fprintf(stderr, "alcOpenDevice failed\n");
-            return;
+            throw aul::Exception("alcOpenDevice failed");
         }
         
         // clear error code
@@ -63,10 +63,10 @@ public:
         ctx = alcCreateContext(dev, NULL);
         if(!ctx)
         {
-            fprintf(stderr, "alcCreateContext failed\n");
-            return;
+            throw aul::Exception("alcCreateContext failed");
         }
-         alcMakeContextCurrent(ctx);
+        
+        alcMakeContextCurrent(ctx);
     }
     
     /// Destroy OpenAL Device

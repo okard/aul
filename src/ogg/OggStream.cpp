@@ -23,28 +23,42 @@
 */
 #include "OggStream.hpp"
 
+#include <aul/Exception.hpp>
+
 using aul::OggStream;
 
+/**
+* Create new OGG stream
+*/
 OggStream::OggStream()
 {
-
 }
 
+/**
+* Distructs OGG stream
+*/
 OggStream::~OggStream()
 {
-
 }
 
+/**
+* Open a file as ogg stream
+*/
 void OggStream::open(const char* file)
 {
+    //TODO Error Checks
+    
     oggFile = fopen(file, "rb");
     int result = ov_open(oggFile, &oggStream, NULL, 0);
+    
     vorbisInfo = ov_info(&oggStream, -1);
     vorbisComment = ov_comment(&oggStream, -1);
 }
 
 
-    
+/**
+* Read from stream
+*/    
 void OggStream::read(char* buffer, size_t bufferSize)
 {
     int  size = 0;
@@ -61,7 +75,7 @@ void OggStream::read(char* buffer, size_t bufferSize)
         else
             if(result < 0)
                 //TODO error constants from ogg
-                throw "Error while reading ogg";
+                throw aul::Exception("Error while reading ogg");
             else
                 break;
     }

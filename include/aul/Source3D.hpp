@@ -33,7 +33,10 @@ namespace aul {
 */
 class Source3D : public Source
 {
-     
+private:
+    //position
+    
+public:
      
 };
 
