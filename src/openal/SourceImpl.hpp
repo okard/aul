@@ -54,6 +54,9 @@ private:
     
     /// Is AudioStream Open
     bool streamOpen;
+    
+    /// Local Buffer
+    char localBuffer[1024];
 
 public:
     /// Create OpenAL Audio Source
@@ -106,6 +109,7 @@ public:
         }
         
         stream = StreamFactory::create(file);
+        stream->open(file);
         update();
     }
     
@@ -121,7 +125,7 @@ public:
         ALboolean loop;
         
         //read to local buffer
-        //stream->read(char* buffer, size_t bufferSize);
+        stream->read(localBuffer, 1024);
         
         //from local buffer to openal stream
         //alBufferData(Buffer, format, data, size, freq);

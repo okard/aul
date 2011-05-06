@@ -35,7 +35,7 @@ OggStream::OggStream()
 }
 
 /**
-* Distructs OGG stream
+* Destructs OGG stream
 */
 OggStream::~OggStream()
 {
@@ -49,7 +49,14 @@ void OggStream::open(const char* file)
     //TODO Error Checks
     
     oggFile = fopen(file, "rb");
+    
+    if(oggFile == NULL)
+        throw aul::Exception("Failed to open file");
+    
     int result = ov_open(oggFile, &oggStream, NULL, 0);
+    
+    if(result != 0)
+        throw aul::Exception("Failed to read ogg file");
     
     vorbisInfo = ov_info(&oggStream, -1);
     vorbisComment = ov_comment(&oggStream, -1);

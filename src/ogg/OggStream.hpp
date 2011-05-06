@@ -55,7 +55,7 @@ public:
     OggStream();
     
     /**
-    * Distructs OGG stream
+    * Destructs OGG stream
     */
     ~OggStream ();
     
