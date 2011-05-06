@@ -90,3 +90,10 @@ void Source::stop()
     impl->stop();
 }
 
+/**
+* Get state
+*/
+Source::State Source::state()
+{
+    return impl->state();
+}

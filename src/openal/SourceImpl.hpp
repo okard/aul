@@ -84,10 +84,13 @@ public:
 
         //initial configuraton for source
         alSourcei (source, AL_BUFFER,   buffer   );
+        
         alSourcef (source, AL_PITCH,    1.0f     );
         alSourcef (source, AL_GAIN,     1.0f     );
         alSourcefv(source, AL_POSITION, SourcePos);
         alSourcefv(source, AL_VELOCITY, SourceVel);
+        
+        //TODO Looping
         alSourcei (source, AL_LOOPING,  false     );
     }
     
@@ -108,8 +111,12 @@ public:
             stream = 0;
         }
         
+        //get stream handler for file
         stream = StreamFactory::create(file);
+        //open file
         stream->open(file);
+        
+        //push first data into al buffer?
         update();
     }
     
@@ -118,17 +125,30 @@ public:
     */
     void update()
     {     
-        ALenum format;
-        ALsizei size;
-        ALvoid* data;
-        ALsizei freq;
-        ALboolean loop;
+        ALenum format; 
+        ALsizei freq = stream->rate();
+        
+        switch(stream->format())
+        {
+            case Stream::MONO8: format = AL_FORMAT_MONO8; break;
+            case Stream::MONO16: format= AL_FORMAT_MONO16; break; 
+            case Stream::STEREO8: format= AL_FORMAT_STEREO8; break; 
+            case Stream::STEREO16: format= AL_FORMAT_STEREO16; break;
+        }
         
         //read to local buffer
         stream->read(localBuffer, 1024);
         
+        // clear error code
+        alGetError(); 
+        
         //from local buffer to openal stream
-        //alBufferData(Buffer, format, data, size, freq);
+        alBufferData(buffer, format, localBuffer, 1024, freq);
+        
+        // clear error code
+        ALenum err = alGetError(); 
+        if(err != AL_NO_ERROR)
+            throw aul::Exception("Error occured alBufferData");
     }
     
     
@@ -148,6 +168,19 @@ public:
     void stop()
     {
          alSourceStop(source);
+    }
+    
+    /// get state
+    State state()
+    {
+        ALint state;
+        alGetSourcei(source, AL_SOURCE_STATE, &state);
+        
+        switch(state)
+        {
+            case AL_STOPPED: return STOPPED;
+            case AL_PLAYING: return PLAYING;
+        }
     }
     
     /*

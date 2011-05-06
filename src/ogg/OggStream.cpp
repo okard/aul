@@ -68,13 +68,14 @@ void OggStream::open(const char* file)
 */    
 void OggStream::read(char* buffer, size_t bufferSize)
 {
-    int  size = 0;
-    int  section;
-    int  result;
- 
+    int section;
+    int result;
+    int size = 0;
+    
     //try to read
     while(size < bufferSize)
     {
+        //long ov_read(OggVorbis_File *vf, char *buffer, int length, int bigendianp, int word, int sgned, int *bitstream);
         result = ov_read(&oggStream, buffer + size, bufferSize - size, 0, 2, 1, & section);
     
         if(result > 0)
@@ -86,4 +87,17 @@ void OggStream::read(char* buffer, size_t bufferSize)
             else
                 break;
     }
+}
+
+
+/// Get format
+aul::Stream::Format OggStream::format()
+{
+    return vorbisInfo->channels == 2 ? Stream::STEREO16 : Stream::MONO16; 
+}
+
+/// Get Rate
+long OggStream::rate()
+{
+    return vorbisInfo->rate;
 }

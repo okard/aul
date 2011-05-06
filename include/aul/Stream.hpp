@@ -36,6 +36,8 @@ class Source;
 class Stream
 {
 public:
+    enum Format {MONO8, MONO16, STEREO8, STEREO16};
+    
     ///Create new Stream
     Stream(){}
     /// Destruct Stream
@@ -47,9 +49,12 @@ public:
     /// Read Data
     virtual void read(char* buffer, size_t bufferSize){};
     
+    /// Get format
+    virtual Format format(){};
     
-    //rate
-    //format (mono16, stereo16)...
+    /// Get Rate
+    virtual long rate(){};
+    
     //empty
     //reset
     //size?

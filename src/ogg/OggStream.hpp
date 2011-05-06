@@ -68,6 +68,12 @@ public:
     * Read from stream
     */
     virtual void read(char* buffer, size_t bufferSize);
+    
+    /// Get format
+    virtual Format format();
+    
+    /// Get Rate
+    virtual long rate();
 };
     
       

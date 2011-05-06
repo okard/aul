@@ -37,7 +37,11 @@ class Device;
 class Source
 {
 public:
-    enum PlayType { BLOCK, ASYNC };
+    /// Play Mode
+    enum PlayMode { BLOCK, ASYNC };
+    
+    /// Play State
+    enum State { STOPPED, PLAYING };
     
     
     /**
@@ -74,6 +78,11 @@ public:
     * Stop Source
     */
     void stop();
+    
+    /**
+    * Get state
+    */
+    State state();
     
     //loop 
     //blocking play
